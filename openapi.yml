@@ -1,0 +1,116 @@
+openapi: 3.0.3
+info:
+  title: 天気アプリのBFF仕様書
+  description: |-
+    kadai-2-weather-app-KawamuraTaisei と kadai-2-weather-api-KawamuraTaiseiで使われる\
+    岩手県内陸の今日、明日、明後日の天気をテキスト形式で表示する
+  version: 0.0.1
+  contact: {}
+servers:
+  - url: https://localhost:3000/
+tags:
+  - name: api
+    description: Everything about Weater
+paths:
+  /api/days:
+    get:
+      tags:
+        - api
+      summary: Find 3days Weather
+      description: Update an existing pet by Id
+      operationId: /api/days/
+      parameters:
+        - name: pref
+          in: query
+          description: 都道府県
+          required: true
+          schema:
+            type: string
+        - name: area
+          in: query
+          description: 市区町村
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ApiResponse"
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Not found
+components:
+  schemas:
+    Area:
+      required:
+        - pref
+        - area
+      type: object
+      properties:
+        pref:
+          type: string
+          example: 岩手県
+        area:
+          type: string
+          example: 内陸
+    ApiResponse:
+      type: object
+      properties:
+        pref:
+          type: string
+          example: 岩手県
+        area:
+          type: string
+          example: 内陸
+        today:
+          type: object
+          properties:
+            todaySky:
+              type: string
+              example: くもり 時々 雨
+            tempHigh:
+              type: integer
+              example: 20
+            tempLow:
+              type: integer
+              example: 16
+          description: The weather on Monday
+        tommorow:
+          type: object
+          properties:
+            tommorowSky:
+              type: string
+              example: 晴れ
+            tempHigh:
+              type: integer
+              example: 28
+            tempLow:
+              type: integer
+              example: 17
+          description: The weather on tuesday
+        afterTomorrow:
+          type: object
+          properties:
+            afterTomorrowSky:
+              type: string
+              example: くもり 時々 晴れ
+            tempHigh:
+              type: integer
+              example: 26
+            tempLow:
+              type: integer
+              example: 15
+          description: The weather on wednesday
+  requestBodies:
+    Area:
+      description: Area Object
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Area"
