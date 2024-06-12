@@ -3,7 +3,7 @@ info:
   title: 天気アプリのBFF仕様書
   description: |-
     kadai-2-weather-app-KawamuraTaisei と kadai-2-weather-api-KawamuraTaiseiで使われる\
-    岩手県内陸の今日、明日、明後日の天気をテキスト形式で表示する
+    岩手県内陸の今日、明日の天気をテキスト形式で表示する
   version: 0.0.1
   contact: {}
 servers:
@@ -16,7 +16,7 @@ paths:
     get:
       tags:
         - api
-      summary: Find 3days Weather
+      summary: Find Weather
       description: Update an existing pet by Id
       operationId: /api/days/
       parameters:
@@ -75,11 +75,13 @@ components:
               type: string
               example: くもり 時々 雨
             tempHigh:
-              type: integer
-              example: 20
+              type: number
+              format: float
+              example: 27.0
             tempLow:
-              type: integer
-              example: 16
+              type: number
+              format: float
+              example: 16.4
           description: The weather on Monday
         tommorow:
           type: object
@@ -88,25 +90,14 @@ components:
               type: string
               example: 晴れ
             tempHigh:
-              type: integer
-              example: 28
+              type: number
+              format: float
+              example: 25.6
             tempLow:
-              type: integer
-              example: 17
+              type: number
+              format: float
+              example: 17.3
           description: The weather on tuesday
-        afterTomorrow:
-          type: object
-          properties:
-            afterTomorrowSky:
-              type: string
-              example: くもり 時々 晴れ
-            tempHigh:
-              type: integer
-              example: 26
-            tempLow:
-              type: integer
-              example: 15
-          description: The weather on wednesday
   requestBodies:
     Area:
       description: Area Object
