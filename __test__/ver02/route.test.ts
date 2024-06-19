@@ -20,6 +20,33 @@ describe("パラメーターのprefが間違っている", () => {
       `http://localhost:3000/api?pref=${pref}&area=${area}`
     );
 
-    expect(response.status).toBe(500);
+    expect(response.status).toBe(400);
   });
 });
+
+describe("パラメーターのareaが間違っている", () => {
+  const pref = encodeURIComponent("岩手県");
+  const area = encodeURIComponent("沿岸");
+  it("HTTP STATUSが400である", async () => {
+    const response = await fetch(
+      `http://localhost:3000/api?pref=${pref}&area=${area}`
+    );
+
+    expect(response.status).toBe(400);
+  });
+});
+
+
+describe("両方のパラメーターが間違っている", () => {
+  const pref = encodeURIComponent("秋田県");
+  const area = encodeURIComponent("沿岸");
+  it("HTTP STATUSが400である", async () => {
+    const response = await fetch(
+      `http://localhost:3000/api?pref=${pref}&area=${area}`
+    );
+
+    expect(response.status).toBe(400);
+  });
+});
+
+    
