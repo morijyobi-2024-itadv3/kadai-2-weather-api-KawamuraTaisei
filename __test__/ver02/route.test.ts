@@ -1,5 +1,7 @@
 // api/route.tsのテストファイル
+const API_URL = 'http://localhost:3000/api'
 
+describe("APiへのリクエスト", () => {
 describe("パラメーターが正常に設定されている", () => {
   const pref = encodeURIComponent("岩手県");
   const area = encodeURIComponent("内陸");
@@ -49,4 +51,20 @@ describe("両方のパラメーターが間違っている", () => {
   });
 });
 
-    
+describe("GETメソッド以外でアクセスされた", () => {
+  const pref = '岩手県'
+  const area = '内陸'
+  const methods = ['POST', 'PUT', 'DELETE', 'PATCH']
+  
+  methods.forEach(async (method) => {
+    it(`HTTP STATUSが405である`, async () => {
+      const response = await fetch(`http://localhost:3000/api?pref=${pref}&area=${area}`, {
+        method: method,
+      });
+
+      expect(response.status).toBe(405);
+    });
+  });
+});
+});
+   
