@@ -7,10 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "npx jest"
   },
   "dependencies": {
     "@types/express": "^4.17.21",
+    "@types/node-fetch": "^2.6.11",
     "express": "^4.19.2",
     "next": "14.2.3",
     "react": "^18",
@@ -27,7 +28,7 @@
     "eslint-config-next": "14.2.3",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "ts-node": "^10.9.2",
+    "ts-jest": "^29.1.5",
     "typescript": "^5"
   }
 }
