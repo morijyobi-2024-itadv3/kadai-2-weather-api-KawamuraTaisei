@@ -112,6 +112,25 @@ describe('APIのレスポンス', () => {
           expect(data.today.tempLow).toBeDefined()
           expect(data.today).toHaveProperty('tempLow')
         })
+         it('jsonに tomorrow が含まれる', () => {
+          expect(data.tomorrow).toBeDefined()
+          expect(data).toHaveProperty('tomorrow')
+        })
+
+        it('jsonに tomorrow.tomorrowSky が含まれる', () => {
+          expect(data.tomorrow.tomorrowSky).toBeDefined()
+          expect(data.tomorrow).toHaveProperty('tomorrowSky')
+        })
+
+        it('jsonに tomorrow.tempHigh が含まれる', () => {
+          expect(data.tomorrow.tempHigh).toBeDefined()
+          expect(data.tomorrow).toHaveProperty('tempHigh')
+        })
+
+        it('jsonに tomorrow.tempLow が含まれる', () => {
+          expect(data.tomorrow.tempLow).toBeDefined()
+          expect(data.tomorrow).toHaveProperty('tempLow')
+        })
       });
     });
  });
