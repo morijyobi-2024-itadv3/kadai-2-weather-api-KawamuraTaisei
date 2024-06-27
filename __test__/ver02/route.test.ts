@@ -1,5 +1,10 @@
 // api/route.tsのテストファイル
 import { type TypeResponse } from "@/app/api/type";
+import {
+  type JmaJsonArray,
+  type TempArea,
+  type WeatherArea,
+} from '@/app/api/type.jma';
 const API_URL = 'http://localhost:3000/api';
 
 describe("APiへのリクエスト", () => {
@@ -132,6 +137,40 @@ describe('APIのレスポンス', () => {
           expect(data.tomorrow).toHaveProperty('tempLow')
         })
       });
+    });
+    describe('jsonの値', () => {
+      let jma_json: JmaJsonArray
+      beforeAll(async () => {
+        const jma = await fetch(
+          `https://www.jma.go.jp/bosai/forecast/data/forecast/030000.json`,
+        )
+        jma_json = await jma.json()
+      })
+      it('prefの値はprefの値の岩手県である', () => {
+        expect(data.pref).toEqual(pref)
+      })
+
+      it('areaの値はareaの値の内陸である', () => {
+        expect(data.area).toEqual(area)
+      })  
+      it('today.todaySkyの値', () => {
+        expect(typeof data.today.todaySky).toBe('string')
+        expect(data.today.todaySky).toEqual(
+          (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[0],
+        )
+      })
+
+      it('today.tempHighの値', () => {
+        expect(typeof data.today.tempHigh).toBe('string')
+        expect(data.today.tempHigh).toEqual(
+          (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[1],
+        )
+      })
+
+      it('today.tempLowの値', () => {
+        expect(typeof data.today.tempLow).toBe('string')
+        expect(data.today.tempLow).toEqual('-')
+      })
     });
  });
 });
