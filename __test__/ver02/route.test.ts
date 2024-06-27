@@ -86,6 +86,34 @@ describe('APIのレスポンス', () => {
         expect(response.headers.get('Content-Type')).toBe('application/json');
       });
     });
+    describe('レスポンスボディ', () => {
+      describe('jsonの構造', () => {
+        it('jsonに pref が含まれる', async () => {
+          expect(data.pref).toBeDefined()
+          expect(data).toHaveProperty('pref')
+        })
+        it('jsonに area が含まれる', async () => {
+          expect(data.area).toBeDefined()
+          expect(data).toHaveProperty('area')
+        })
+        it('jsonに today が含まれる', async () => {
+          expect(data.today).toBeDefined()
+          expect(data).toHaveProperty('today')
+        })
+        it('jsonに today.sky が含まれる', async () => {
+          expect(data.today.todaySky).toBeDefined()
+          expect(data.today).toHaveProperty('todaySky')
+        })
+        it('jsonに today.tempHigh が含まれる', async () => {
+          expect(data.today.tempHigh).toBeDefined()
+          expect(data.today).toHaveProperty('tempHigh')
+        })
+        it('jsonに today.tempLow が含まれる', async () => {
+          expect(data.today.tempLow).toBeDefined()
+          expect(data.today).toHaveProperty('tempLow')
+        })
+      });
+    });
  });
 });
 
