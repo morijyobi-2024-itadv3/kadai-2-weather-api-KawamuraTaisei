@@ -86,5 +86,6 @@ describe('APIのレスポンス', () => {
         expect(response.headers.get('Content-Type')).toBe('application/json');
       });
     });
-  });
+ });
 });
+
