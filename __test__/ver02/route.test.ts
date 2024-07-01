@@ -171,6 +171,26 @@ describe('APIのレスポンス', () => {
         expect(typeof data.today.tempLow).toBe('string')
         expect(data.today.tempLow).toEqual('-')
       })
+      it('tomorrow.tomorrowSkyの値', () => {
+          expect(typeof data.tomorrow.tomorrowSky).toBe('string')
+          expect(data.tomorrow.tomorrowSky).toEqual(
+            (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[1],
+          )
+      })
+
+      it('tomorrow.tempHighの値', () => {
+          expect(typeof data.tomorrow.tempHigh).toBe('string')
+          expect(data.tomorrow.tempHigh).toEqual(
+            (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[3],
+          )
+      })
+
+      it('tomorrow.tempLowの値', () => {
+          expect(typeof data.tomorrow.tempLow).toBe('string')
+          expect(data.tomorrow.tempLow).toEqual(
+            (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[2],
+          )
+      })
     });
  });
 });
