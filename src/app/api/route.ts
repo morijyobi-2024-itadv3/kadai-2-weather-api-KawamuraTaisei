@@ -1,3 +1,10 @@
+import { TypeResponse } from "./type";
+import {
+  type JmaJsonArray,
+  type TempArea,
+  type WeatherArea,
+}from './type.jma'
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const pref = searchParams.get("pref");
@@ -9,15 +16,30 @@ export async function GET(request: Request) {
     return new Response("Invalid parameter", { status: 400 });
   }
 
-  const res = await fetch(
-    `https://www.jma.go.jp/bosai/forecast/data/forecast/030000.json`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  const weather = await res.json();
+  const res = await fetch(`https://www.jma.go.jp/bosai/forecast/data/forecast/030000.json`, 
+    {next: {revalidate: 3600}},
+  )
+  
+  const jma_json: JmaJsonArray = await res.json()
 
-  return Response.json(weather);
+   const response: TypeResponse = {
+    pref: pref,
+    area: area,
+    today: {
+      todaySky: (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[0],
+      tempHigh: (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[1],
+      tempLow: '-',
+    },
+    tomorrow: {
+      tomorrowSky: (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[1],
+      tempHigh: (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[3],
+      tempLow: (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[2],
+    }
+  }
+
+   return Response.json(response, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 }

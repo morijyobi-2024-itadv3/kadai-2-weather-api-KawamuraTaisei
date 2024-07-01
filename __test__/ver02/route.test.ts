@@ -1,5 +1,10 @@
 // api/route.tsのテストファイル
 import { type TypeResponse } from "@/app/api/type";
+import {
+  type JmaJsonArray,
+  type TempArea,
+  type WeatherArea,
+} from '@/app/api/type.jma';
 const API_URL = 'http://localhost:3000/api';
 
 describe("APiへのリクエスト", () => {
@@ -85,6 +90,107 @@ describe('APIのレスポンス', () => {
       it('レスポンスヘッダは application/json である', async () => {
         expect(response.headers.get('Content-Type')).toBe('application/json');
       });
+    });
+    describe('レスポンスボディ', () => {
+      describe('jsonの構造', () => {
+        it('jsonに pref が含まれる', async () => {
+          expect(data.pref).toBeDefined()
+          expect(data).toHaveProperty('pref')
+        })
+        it('jsonに area が含まれる', async () => {
+          expect(data.area).toBeDefined()
+          expect(data).toHaveProperty('area')
+        })
+        it('jsonに today が含まれる', async () => {
+          expect(data.today).toBeDefined()
+          expect(data).toHaveProperty('today')
+        })
+        it('jsonに today.sky が含まれる', async () => {
+          expect(data.today.todaySky).toBeDefined()
+          expect(data.today).toHaveProperty('todaySky')
+        })
+        it('jsonに today.tempHigh が含まれる', async () => {
+          expect(data.today.tempHigh).toBeDefined()
+          expect(data.today).toHaveProperty('tempHigh')
+        })
+        it('jsonに today.tempLow が含まれる', async () => {
+          expect(data.today.tempLow).toBeDefined()
+          expect(data.today).toHaveProperty('tempLow')
+        })
+         it('jsonに tomorrow が含まれる', () => {
+          expect(data.tomorrow).toBeDefined()
+          expect(data).toHaveProperty('tomorrow')
+        })
+
+        it('jsonに tomorrow.tomorrowSky が含まれる', () => {
+          expect(data.tomorrow.tomorrowSky).toBeDefined()
+          expect(data.tomorrow).toHaveProperty('tomorrowSky')
+        })
+
+        it('jsonに tomorrow.tempHigh が含まれる', () => {
+          expect(data.tomorrow.tempHigh).toBeDefined()
+          expect(data.tomorrow).toHaveProperty('tempHigh')
+        })
+
+        it('jsonに tomorrow.tempLow が含まれる', () => {
+          expect(data.tomorrow.tempLow).toBeDefined()
+          expect(data.tomorrow).toHaveProperty('tempLow')
+        })
+      });
+    });
+    describe('jsonの値', () => {
+      let jma_json: JmaJsonArray
+      beforeAll(async () => {
+        const jma = await fetch(
+          `https://www.jma.go.jp/bosai/forecast/data/forecast/030000.json`,
+        )
+        jma_json = await jma.json()
+      })
+      it('prefの値はprefの値の岩手県である', () => {
+        expect(data.pref).toEqual(pref)
+      })
+
+      it('areaの値はareaの値の内陸である', () => {
+        expect(data.area).toEqual(area)
+      })  
+      it('today.todaySkyの値', () => {
+        expect(typeof data.today.todaySky).toBe('string')
+        expect(data.today.todaySky).toEqual(
+          (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[0],
+        )
+      })
+
+      it('today.tempHighの値', () => {
+        expect(typeof data.today.tempHigh).toBe('string')
+        expect(data.today.tempHigh).toEqual(
+          (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[1],
+        )
+      })
+
+      it('today.tempLowの値', () => {
+        expect(typeof data.today.tempLow).toBe('string')
+        expect(data.today.tempLow).toEqual('-')
+      })
+      it('tomorrow.tomorrowSkyの値', () => {
+          expect(typeof data.tomorrow.tomorrowSky).toBe('string')
+          expect(data.tomorrow.tomorrowSky).toEqual(
+            (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[1],
+          )
+      })
+
+      it('tomorrow.tempHighの値', () => {
+          expect(typeof data.tomorrow.tempHigh).toBe('string')
+          expect(data.tomorrow.tempHigh).toEqual(
+            (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[3],
+          )
+      })
+
+      it('tomorrow.tempLowの値', () => {
+          expect(typeof data.tomorrow.tempLow).toBe('string')
+          expect(data.tomorrow.tempLow).toEqual(
+            (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[2],
+          )
+      })
     });
  });
 });
