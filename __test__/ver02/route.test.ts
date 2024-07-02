@@ -1,96 +1,98 @@
 // api/route.tsのテストファイル
-import { type TypeResponse } from "@/app/api/type";
+import { type TypeResponse } from '@/app/api/type'
 import {
   type JmaJsonArray,
   type TempArea,
   type WeatherArea,
-} from '@/app/api/type.jma';
-const API_URL = 'http://localhost:3000/api';
+} from '@/app/api/type.jma'
+const API_URL = 'http://localhost:3000/api'
 
-describe("APiへのリクエスト", () => {
-  describe("パラメーターが正常に設定されている", () => {
-    const pref = encodeURIComponent("岩手県");
-    const area = encodeURIComponent("内陸");
-    it("HTTP STATUSが200である", async () => {
+describe('APiへのリクエスト', () => {
+  describe('パラメーターが正常に設定されている', () => {
+    const pref = encodeURIComponent('岩手県')
+    const area = encodeURIComponent('内陸')
+    it('HTTP STATUSが200である', async () => {
       const response = await fetch(
-        `http://localhost:3000/api?pref=${pref}&area=${area}`
-      );
+        `http://localhost:3000/api?pref=${pref}&area=${area}`,
+      )
 
-      expect(response.status).toBe(200);
-    });
-  });
+      expect(response.status).toBe(200)
+    })
+  })
 
-  describe("パラメーターのprefが間違っている", () => {
-    const pref = encodeURIComponent("青森県");
-    const area = encodeURIComponent("内陸");
-    it("HTTP STATUSが400である", async () => {
+  describe('パラメーターのprefが間違っている', () => {
+    const pref = encodeURIComponent('青森県')
+    const area = encodeURIComponent('内陸')
+    it('HTTP STATUSが400である', async () => {
       const response = await fetch(
-        `http://localhost:3000/api?pref=${pref}&area=${area}`
-      );
+        `http://localhost:3000/api?pref=${pref}&area=${area}`,
+      )
 
-      expect(response.status).toBe(400);
-    });
-  });
+      expect(response.status).toBe(400)
+    })
+  })
 
-  describe("パラメーターのareaが間違っている", () => {
-    const pref = encodeURIComponent("岩手県");
-    const area = encodeURIComponent("沿岸");
-    it("HTTP STATUSが400である", async () => {
+  describe('パラメーターのareaが間違っている', () => {
+    const pref = encodeURIComponent('岩手県')
+    const area = encodeURIComponent('沿岸')
+    it('HTTP STATUSが400である', async () => {
       const response = await fetch(
-        `http://localhost:3000/api?pref=${pref}&area=${area}`
-      );
+        `http://localhost:3000/api?pref=${pref}&area=${area}`,
+      )
 
-      expect(response.status).toBe(400);
-    });
-  });
+      expect(response.status).toBe(400)
+    })
+  })
 
-
-  describe("両方のパラメーターが間違っている", () => {
-    const pref = encodeURIComponent("秋田県");
-    const area = encodeURIComponent("沿岸");
-    it("HTTP STATUSが400である", async () => {
+  describe('両方のパラメーターが間違っている', () => {
+    const pref = encodeURIComponent('秋田県')
+    const area = encodeURIComponent('沿岸')
+    it('HTTP STATUSが400である', async () => {
       const response = await fetch(
-        `http://localhost:3000/api?pref=${pref}&area=${area}`
-      );
+        `http://localhost:3000/api?pref=${pref}&area=${area}`,
+      )
 
-      expect(response.status).toBe(400);
-    });
-  });
+      expect(response.status).toBe(400)
+    })
+  })
 
-  describe("GETメソッド以外でアクセスされた", () => {
-    const pref = '岩手県';
-    const area = '内陸';
-    const methods = ['POST', 'PUT', 'DELETE', 'PATCH'];
-  
+  describe('GETメソッド以外でアクセスされた', () => {
+    const pref = '岩手県'
+    const area = '内陸'
+    const methods = ['POST', 'PUT', 'DELETE', 'PATCH']
+
     methods.forEach(async (method) => {
       it(`HTTP STATUSが405である`, async () => {
-        const response = await fetch(`http://localhost:3000/api?pref=${pref}&area=${area}`, {
-          method: method,
-        });
+        const response = await fetch(
+          `http://localhost:3000/api?pref=${pref}&area=${area}`,
+          {
+            method: method,
+          },
+        )
 
-        expect(response.status).toBe(405);
-      });
-    });
-  });
-});
-  
+        expect(response.status).toBe(405)
+      })
+    })
+  })
+})
+
 describe('APIのレスポンス', () => {
   describe('パラメーターが正しい場合', () => {
-    const pref = '岩手県';
-    const area = '内陸';
-    let response:Response;
-    let data:TypeResponse;
+    const pref = '岩手県'
+    const area = '内陸'
+    let response: Response
+    let data: TypeResponse
 
     // テスト実行前にAPIにリクエストを送信し、レスポンスを取得する
     beforeAll(async () => {
-      response = await fetch(`${API_URL}?pref=${pref}&area=${area}`);
-      data = await response.json();
-    });
+      response = await fetch(`${API_URL}?pref=${pref}&area=${area}`)
+      data = await response.json()
+    })
     describe('レスポンスヘッダ', () => {
       it('レスポンスヘッダは application/json である', async () => {
-        expect(response.headers.get('Content-Type')).toBe('application/json');
-      });
-    });
+        expect(response.headers.get('Content-Type')).toBe('application/json')
+      })
+    })
     describe('レスポンスボディ', () => {
       describe('jsonの構造', () => {
         it('jsonに pref が含まれる', async () => {
@@ -117,7 +119,7 @@ describe('APIのレスポンス', () => {
           expect(data.today.tempLow).toBeDefined()
           expect(data.today).toHaveProperty('tempLow')
         })
-         it('jsonに tomorrow が含まれる', () => {
+        it('jsonに tomorrow が含まれる', () => {
           expect(data.tomorrow).toBeDefined()
           expect(data).toHaveProperty('tomorrow')
         })
@@ -136,8 +138,8 @@ describe('APIのレスポンス', () => {
           expect(data.tomorrow.tempLow).toBeDefined()
           expect(data.tomorrow).toHaveProperty('tempLow')
         })
-      });
-    });
+      })
+    })
     describe('jsonの値', () => {
       let jma_json: JmaJsonArray
       beforeAll(async () => {
@@ -152,7 +154,7 @@ describe('APIのレスポンス', () => {
 
       it('areaの値はareaの値の内陸である', () => {
         expect(data.area).toEqual(area)
-      })  
+      })
       it('today.todaySkyの値', () => {
         expect(typeof data.today.todaySky).toBe('string')
         expect(data.today.todaySky).toEqual(
@@ -172,26 +174,25 @@ describe('APIのレスポンス', () => {
         expect(data.today.tempLow).toEqual('-')
       })
       it('tomorrow.tomorrowSkyの値', () => {
-          expect(typeof data.tomorrow.tomorrowSky).toBe('string')
-          expect(data.tomorrow.tomorrowSky).toEqual(
-            (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[1],
-          )
+        expect(typeof data.tomorrow.tomorrowSky).toBe('string')
+        expect(data.tomorrow.tomorrowSky).toEqual(
+          (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[1],
+        )
       })
 
       it('tomorrow.tempHighの値', () => {
-          expect(typeof data.tomorrow.tempHigh).toBe('string')
-          expect(data.tomorrow.tempHigh).toEqual(
-            (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[3],
-          )
+        expect(typeof data.tomorrow.tempHigh).toBe('string')
+        expect(data.tomorrow.tempHigh).toEqual(
+          (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[3],
+        )
       })
 
       it('tomorrow.tempLowの値', () => {
-          expect(typeof data.tomorrow.tempLow).toBe('string')
-          expect(data.tomorrow.tempLow).toEqual(
-            (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[2],
-          )
+        expect(typeof data.tomorrow.tempLow).toBe('string')
+        expect(data.tomorrow.tempLow).toEqual(
+          (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[2],
+        )
       })
-    });
- });
-});
-
+    })
+  })
+})
