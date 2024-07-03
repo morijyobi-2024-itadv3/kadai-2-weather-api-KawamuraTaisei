@@ -12,9 +12,7 @@ describe('APiへのリクエスト', () => {
     const pref = encodeURIComponent('岩手県')
     const area = encodeURIComponent('内陸')
     it('HTTP STATUSが200である', async () => {
-      const response = await fetch(
-        `http://localhost:3000/api?pref=${pref}&area=${area}`,
-      )
+      const response = await fetch(`${API_URL}?pref=${pref}&area=${area}`)
 
       expect(response.status).toBe(200)
     })
@@ -24,9 +22,7 @@ describe('APiへのリクエスト', () => {
     const pref = encodeURIComponent('青森県')
     const area = encodeURIComponent('内陸')
     it('HTTP STATUSが400である', async () => {
-      const response = await fetch(
-        `http://localhost:3000/api?pref=${pref}&area=${area}`,
-      )
+      const response = await fetch(`${API_URL}?pref=${pref}&area=${area}`)
 
       expect(response.status).toBe(400)
     })
@@ -36,9 +32,7 @@ describe('APiへのリクエスト', () => {
     const pref = encodeURIComponent('岩手県')
     const area = encodeURIComponent('沿岸')
     it('HTTP STATUSが400である', async () => {
-      const response = await fetch(
-        `http://localhost:3000/api?pref=${pref}&area=${area}`,
-      )
+      const response = await fetch(`${API_URL}?pref=${pref}&area=${area}`)
 
       expect(response.status).toBe(400)
     })
@@ -48,9 +42,7 @@ describe('APiへのリクエスト', () => {
     const pref = encodeURIComponent('秋田県')
     const area = encodeURIComponent('沿岸')
     it('HTTP STATUSが400である', async () => {
-      const response = await fetch(
-        `http://localhost:3000/api?pref=${pref}&area=${area}`,
-      )
+      const response = await fetch(`${API_URL}?pref=${pref}&area=${area}`)
 
       expect(response.status).toBe(400)
     })
@@ -63,12 +55,9 @@ describe('APiへのリクエスト', () => {
 
     methods.forEach(async (method) => {
       it(`HTTP STATUSが405である`, async () => {
-        const response = await fetch(
-          `http://localhost:3000/api?pref=${pref}&area=${area}`,
-          {
-            method: method,
-          },
-        )
+        const response = await fetch(`${API_URL}?pref=${pref}&area=${area}`, {
+          method: method,
+        })
 
         expect(response.status).toBe(405)
       })
