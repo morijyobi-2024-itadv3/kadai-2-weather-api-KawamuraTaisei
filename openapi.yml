@@ -75,14 +75,12 @@ components:
               type: string
               example: くもり 時々 雨
             tempHigh:
-              type: number
-              format: float
+              type: string
               example: 27.0
             tempLow:
-              type: number
-              format: float
+              type: string
               example: 16.4
-          description: The weather on Monday
+          description: The weather on today
         tommorow:
           type: object
           properties:
@@ -90,14 +88,12 @@ components:
               type: string
               example: 晴れ
             tempHigh:
-              type: number
-              format: float
-              example: 25.6
+              type: string
+              example: 25
             tempLow:
-              type: number
-              format: float
-              example: 17.3
-          description: The weather on tuesday
+              type: string
+              example: 17
+          description: The weather on tommorow
   requestBodies:
     Area:
       description: Area Object
