@@ -12,13 +12,13 @@ tags:
   - name: api
     description: Everything about Weater
 paths:
-  /api/days:
+  /api:
     get:
       tags:
         - api
       summary: Find Weather
       description: Update an existing pet by Id
-      operationId: /api/days/
+      operationId: /api
       parameters:
         - name: pref
           in: query
