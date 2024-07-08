@@ -2,12 +2,12 @@ export type TypeResponse = {
   pref: string
   area: string
   today: {
-    todaySky: string
+    sky: string
     tempHigh: string
     tempLow: string
   }
   tomorrow: {
-    tomorrowSky: string
+    sky: string
     tempHigh: string
     tempLow: string
   }

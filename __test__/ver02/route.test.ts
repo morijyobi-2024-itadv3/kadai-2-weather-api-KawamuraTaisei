@@ -97,8 +97,8 @@ describe('APIのレスポンス', () => {
           expect(data).toHaveProperty('today')
         })
         it('jsonに today.sky が含まれる', async () => {
-          expect(data.today.todaySky).toBeDefined()
-          expect(data.today).toHaveProperty('todaySky')
+          expect(data.today.sky).toBeDefined()
+          expect(data.today).toHaveProperty('sky')
         })
         it('jsonに today.tempHigh が含まれる', async () => {
           expect(data.today.tempHigh).toBeDefined()
@@ -113,9 +113,9 @@ describe('APIのレスポンス', () => {
           expect(data).toHaveProperty('tomorrow')
         })
 
-        it('jsonに tomorrow.tomorrowSky が含まれる', () => {
-          expect(data.tomorrow.tomorrowSky).toBeDefined()
-          expect(data.tomorrow).toHaveProperty('tomorrowSky')
+        it('jsonに tomorrow.sky が含まれる', () => {
+          expect(data.tomorrow.sky).toBeDefined()
+          expect(data.tomorrow).toHaveProperty('sky')
         })
 
         it('jsonに tomorrow.tempHigh が含まれる', () => {
@@ -144,9 +144,9 @@ describe('APIのレスポンス', () => {
       it('areaの値はareaの値の内陸である', () => {
         expect(data.area).toEqual(area)
       })
-      it('today.todaySkyの値', () => {
-        expect(typeof data.today.todaySky).toBe('string')
-        expect(data.today.todaySky).toEqual(
+      it('today.skyの値', () => {
+        expect(typeof data.today.sky).toBe('string')
+        expect(data.today.sky).toEqual(
           (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[0],
         )
       })
@@ -162,9 +162,9 @@ describe('APIのレスポンス', () => {
         expect(typeof data.today.tempLow).toBe('string')
         expect(data.today.tempLow).toEqual('-')
       })
-      it('tomorrow.tomorrowSkyの値', () => {
-        expect(typeof data.tomorrow.tomorrowSky).toBe('string')
-        expect(data.tomorrow.tomorrowSky).toEqual(
+      it('tomorrow.skyの値', () => {
+        expect(typeof data.tomorrow.sky).toBe('string')
+        expect(data.tomorrow.sky).toEqual(
           (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[1],
         )
       })
