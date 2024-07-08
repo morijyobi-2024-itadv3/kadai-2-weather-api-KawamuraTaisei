@@ -12,12 +12,12 @@ tags:
   - name: api
     description: Everything about Weater
 paths:
-  /api:
+  /v0.2/api:
     get:
       tags:
         - api
       summary: Find Weather
-      description: Update an existing pet by Id
+      description: prefとareaに対応する今日と明日の天気を返す
       operationId: /api
       parameters:
         - name: pref
@@ -38,8 +38,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
                   $ref: '#/components/schemas/ApiResponse'
         '400':
           description: Invalid ID supplied
