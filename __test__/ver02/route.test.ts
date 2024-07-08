@@ -1,11 +1,11 @@
 // api/route.tsのテストファイル
-import { type TypeResponse } from '@/app/api/type'
+import { type TypeResponse } from '@/app/v0.2/api/type'
 import {
   type JmaJsonArray,
   type TempArea,
   type WeatherArea,
-} from '@/app/api/type.jma'
-const API_URL = 'http://localhost:3000/api'
+} from '@/app/v0.2/api/type.jma'
+const API_URL = 'http://localhost:3000/v0.2/api'
 
 describe('APiへのリクエスト', () => {
   describe('パラメーターが正常に設定されている', () => {
