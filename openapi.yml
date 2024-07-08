@@ -81,10 +81,10 @@ components:
               type: string
               example: 16.4
           description: The weather on today
-        tommorow:
+        tomorrow:
           type: object
           properties:
-            tommorowSky:
+            sky:
               type: string
               example: 晴れ
             tempHigh:
@@ -93,7 +93,7 @@ components:
             tempLow:
               type: string
               example: 17
-          description: The weather on tommorow
+          description: The weather on tomorrow
   requestBodies:
     Area:
       description: Area Object
