@@ -10,8 +10,6 @@ export async function GET(request: Request) {
   const pref = searchParams.get('pref')
   const area = searchParams.get('area')
 
-  console.log(pref, area)
-
   if (pref !== '岩手県' || area !== '内陸') {
     return new Response('Invalid parameter', { status: 400 })
   }
@@ -29,7 +27,7 @@ export async function GET(request: Request) {
     today: {
       sky: (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[0],
       tempHigh: (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[1],
-      tempLow: '-',
+      tempLow: (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[2],
     },
     tomorrow: {
       sky: (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[1],
