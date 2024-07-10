@@ -10,8 +10,6 @@ export async function GET(request: Request) {
   const pref = searchParams.get('pref')
   const area = searchParams.get('area')
 
-  console.log(pref, area)
-
   if (pref !== '岩手県' || area !== '内陸') {
     return new Response('Invalid parameter', { status: 400 })
   }
