@@ -183,5 +183,13 @@ describe('APIのレスポンス', () => {
         )
       })
     })
+    describe('skyの文字列の空白が削除されている', () => {
+      it('today.skyの文字列', () => {
+        expect(data.today.sky).toEqual(data.today.sky.replace(/\s+/g, ''))
+      })
+      it('tomorrow.skyの文字列', () => {
+        expect(data.tomorrow.sky).toEqual(data.tomorrow.sky.replace(/\s+/g, ''))
+      })
+    })
   })
 })
