@@ -25,12 +25,16 @@ export async function GET(request: Request) {
     pref: pref,
     area: area,
     today: {
-      sky: (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[0],
+      sky: (
+        jma_json[0].timeSeries[0].areas[0] as WeatherArea
+      ).weathers[0].replace(/\s+/g, ''),
       tempHigh: (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[1],
       tempLow: '-',
     },
     tomorrow: {
-      sky: (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[1],
+      sky: (
+        jma_json[0].timeSeries[0].areas[0] as WeatherArea
+      ).weathers[1].replace(/\s+/g, ''),
       tempHigh: (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[3],
       tempLow: (jma_json[0].timeSeries[2].areas[0] as TempArea).temps[2],
     },
