@@ -147,7 +147,9 @@ describe('APIのレスポンス', () => {
       it('today.skyの値', () => {
         expect(typeof data.today.sky).toBe('string')
         expect(data.today.sky).toEqual(
-          (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[0],
+          (
+            jma_json[0].timeSeries[0].areas[0] as WeatherArea
+          ).weathers[0].replace(/\s+/g, ''),
         )
       })
 
@@ -165,7 +167,9 @@ describe('APIのレスポンス', () => {
       it('tomorrow.skyの値', () => {
         expect(typeof data.tomorrow.sky).toBe('string')
         expect(data.tomorrow.sky).toEqual(
-          (jma_json[0].timeSeries[0].areas[0] as WeatherArea).weathers[1],
+          (
+            jma_json[0].timeSeries[0].areas[0] as WeatherArea
+          ).weathers[1].replace(/\s+/g, ''),
         )
       })
 
