@@ -1,0 +1,12 @@
+.github
+.next
+__test__
+node_modules
+.dockerignore
+.eslint.js
+.prettierrc
+dokcer-compose.yml
+Dockerfile
+jest.config.ts
+openapi.yml
+README.md
